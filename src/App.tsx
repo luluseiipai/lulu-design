@@ -1,27 +1,41 @@
 import React, { useEffect } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import Button, { ButtonType, ButtonSize } from './components/Button'
 
 function App() {
   useEffect(() => {})
   return (
     <div className='App'>
       <header className='App-header'>
-        <h1>hello world</h1>
-        <h2>hello world</h2>
-        <h3>hello world</h3>
-        <h4>hello world</h4>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
+        <button className='test'>test</button>
+        <Button disabled className='test'>
+          hello
+        </Button>
+        <Button btnType={ButtonType.Primary} size={ButtonSize.Large} autoFocus>
+          123
+        </Button>
+        <Button
+          btnType={ButtonType.Primary}
+          onClick={() => {
+            console.log(123)
+          }}>
+          123
+        </Button>
+        <Button btnType={ButtonType.Warning}>123</Button>
+        <Button btnType={ButtonType.Danger}>123</Button>
+        <Button>123</Button>
+        <Button
+          btnType={ButtonType.Link}
+          size={ButtonSize.Small}
+          disabled
+          href='https://luluonline.cn'>
+          123
+        </Button>
+        <Button
+          btnType={ButtonType.Link}
+          size={ButtonSize.Small}
+          href='https://luluonline.cn'>
+          123
+        </Button>
       </header>
     </div>
   )
