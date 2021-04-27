@@ -1,0 +1,35 @@
+$alert-color: (
+  'default': $primary,
+  'success': $success,
+  'warning': $warning,
+  'danger': $danger,
+);
+
+.lu-alert {
+  position: relative;
+  padding: $alert-padding-y $alert-padding-x;
+  border-radius: $alert-border-radius;
+  border: $alert-border-width solid transparent;
+  margin-bottom: $alert-margin-bottom;
+  .lu-alert-title {
+    font-weight: $alert-title-font-weight;
+  }
+  .lu-alert-desc {
+    font-size: $alert-description-font-size;
+    margin: $alert-description-top-margin 0 0;
+  }
+  .lu-alert-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: $alert-padding-y $alert-padding-x;
+    color: inherit;
+    cursor: pointer;
+  }
+}
+
+@each $color, $value in $alert-color {
+  .lu-alert-#{$color} {
+    @include alert-style($value, darken($value, 5%), $white);
+  }
+}

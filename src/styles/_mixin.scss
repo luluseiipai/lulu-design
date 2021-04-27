@@ -38,3 +38,9 @@
     border-color: darken($border-color, 10%);
   }
 }
+
+@mixin alert-style($background, $border, $color) {
+  color: $color;
+  background: $background;
+  border-color: $border;
+}

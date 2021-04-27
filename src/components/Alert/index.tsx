@@ -1,26 +1,45 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 
-export type AlertType = 'success' | 'default' | 'danger' | 'warning'
+export type AlertType = 'success' | 'default' | 'warning' | 'danger'
 
-interface AlertProps {
+export interface AlertProps {
   type?: AlertType
-  title?: string
+  title: string
   description?: string
   closable?: boolean
-  onClose: () => void
+  onClose?: () => void
 }
 
 const Alert: React.FC<AlertProps> = (props) => {
   const [hide, setHide] = useState(false)
   const { type, title, description, closable, onClose } = props
-  const classes = classNames('alert', {
-    [`alert-${type}`]: type,
+  const classes = classNames('lu-alert', {
+    [`lu-alert-${type}`]: type,
   })
-  const titleClasses = classNames('alert-title', {
-    ['bold-title']: description,
+  const titleClasses = classNames('lu-alert-title', {
+    'bold-title': description,
   })
-  return <>123</>
+  const handleClose = () => {
+    if (onClose) {
+      onClose()
+    }
+    setHide(true)
+  }
+  if (!hide) {
+    return (
+      <div className={classes}>
+        <span className={titleClasses}>{title}</span>
+        {description && <p className='lu-alert-desc'>{description}</p>}
+        {closable && (
+          <div className='lu-alert-close' onClick={handleClose}>
+            关闭
+          </div>
+        )}
+      </div>
+    )
+  }
+  return null
 }
 
 Alert.defaultProps = {
