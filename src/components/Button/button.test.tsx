@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import Button, { ButtonProps, ButtonSize, ButtonType } from './'
+import Button, { ButtonProps, ButtonSize, ButtonType } from './Button'
 
 const defaultProps = {
   onClick: jest.fn(), // 被监控的 mock function

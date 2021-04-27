@@ -1,12 +1,27 @@
 import React, { useEffect } from 'react'
-import Button, { ButtonType, ButtonSize } from './components/Button'
-import Alert from './components/Alert'
+import Button, { ButtonType, ButtonSize } from './components/Button/Button'
+import Alert from './components/Alert/Alert'
+import Menu from './components/Menu/Menu'
+import MenuItem from './components/Menu/MenuItem'
 
 function App() {
   useEffect(() => {})
   return (
     <div className='App'>
       <header className='App-header'>
+        <div className='menu' style={{ margin: '50px' }}>
+          <Menu
+            defaultIndex={0}
+            onSelect={(index) => {
+              alert(index)
+            }}>
+            <MenuItem index={0}>cool link</MenuItem>
+            <MenuItem index={1} disabled>
+              cool link 2
+            </MenuItem>
+            <MenuItem index={2}>cool link 3</MenuItem>
+          </Menu>
+        </div>
         <div className='button' style={{ margin: '20px' }}>
           <button className='test'>test</button>
           <Button disabled className='test'>

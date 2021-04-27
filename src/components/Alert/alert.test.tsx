@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import Alert, { AlertProps } from './'
+import Alert, { AlertProps } from './Alert'
 
 const testProps: AlertProps = {
   title: '测试',
