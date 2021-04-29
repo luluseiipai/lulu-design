@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import Button, { ButtonType, ButtonSize } from './components/Button/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import Alert from './components/Alert/Alert'
 import Menu from './components/Menu/Menu'
 import MenuItem from './components/Menu/MenuItem'
@@ -10,6 +12,7 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
+        <FontAwesomeIcon icon={faCoffee} size='lg' />
         <div className='menu' style={{ margin: '50px' }}>
           <Menu
             defaultIndex={'0'}
