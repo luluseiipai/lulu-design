@@ -10,19 +10,29 @@ export interface MenuProps {
   className?: string
   mode?: MenuMode
   style?: React.CSSProperties
+  defaultOpenSubMenus?: string[]
   onSelect?: selectCallback
 }
 
 interface IMenuContext {
   index: string
   mode?: MenuMode
+  defaultOpenSubMenus?: string[]
   onSelect?: selectCallback
 }
 
 export const MenuContext = React.createContext<IMenuContext>({ index: '0' })
 
 const Menu: React.FC<MenuProps> = (props) => {
-  const { className, defaultIndex, children, mode, style, onSelect } = props
+  const {
+    className,
+    defaultIndex,
+    children,
+    mode,
+    style,
+    defaultOpenSubMenus,
+    onSelect,
+  } = props
   const [curActive, setCurActive] = useState(defaultIndex)
 
   const classes = classNames('lu-menu', className, {
@@ -39,6 +49,7 @@ const Menu: React.FC<MenuProps> = (props) => {
   const passedContext: IMenuContext = {
     index: curActive ? curActive : '0',
     mode,
+    defaultOpenSubMenus,
     onSelect: handleClick,
   }
 
@@ -71,6 +82,7 @@ const Menu: React.FC<MenuProps> = (props) => {
 Menu.defaultProps = {
   defaultIndex: '0',
   mode: 'horizontal',
+  defaultOpenSubMenus: [],
 }
 
 export default Menu
