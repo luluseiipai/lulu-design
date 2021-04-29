@@ -4,7 +4,6 @@ import {
   fireEvent,
   RenderResult,
   cleanup,
-  waitFor,
   act,
 } from '@testing-library/react'
 import Menu, { MenuProps } from './Menu'
