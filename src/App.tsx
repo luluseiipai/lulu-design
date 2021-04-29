@@ -1,25 +1,35 @@
 import React, { useEffect } from 'react'
 import Button, { ButtonType, ButtonSize } from './components/Button/Button'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import Alert from './components/Alert/Alert'
 import Menu from './components/Menu/Menu'
 import MenuItem from './components/Menu/MenuItem'
+import SubMenu from './components/Menu/SubMenu'
 
 function App() {
   useEffect(() => {})
   return (
     <div className='App'>
       <header className='App-header'>
+        <FontAwesomeIcon icon={faCoffee} size='lg' />
         <div className='menu' style={{ margin: '50px' }}>
           <Menu
-            defaultIndex={0}
+            defaultIndex={'0'}
+            mode='vertical'
+            defaultOpenSubMenus={['3']}
             onSelect={(index) => {
-              alert(index)
+              console.log(index)
             }}>
-            <MenuItem index={0}>cool link</MenuItem>
-            <MenuItem index={1} disabled>
-              cool link 2
-            </MenuItem>
-            <MenuItem index={2}>cool link 3</MenuItem>
+            <MenuItem>cool link</MenuItem>
+            <MenuItem disabled>cool link 2</MenuItem>
+            <MenuItem>cool link 3</MenuItem>
+            <SubMenu title='dropdown'>
+              <MenuItem>dropdown 1</MenuItem>
+              <MenuItem>dropdown 2</MenuItem>
+              <MenuItem>dropdown 3</MenuItem>
+            </SubMenu>
+            <MenuItem>cool link 3</MenuItem>
           </Menu>
         </div>
         <div className='button' style={{ margin: '20px' }}>
