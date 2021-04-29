@@ -63,8 +63,12 @@ const SubMenu: React.FC<SubMenuProps> = ({
     })
     const childrenComponent = React.Children.map(children, (child, i) => {
       const childEl = child as React.FunctionComponentElement<MenuItemProps>
+      console.log('subMenu: ', childEl.props.index)
       if (childEl.type.displayName === 'MenuItem') {
-        const idx = childEl.props.index ? childEl.props.index : i
+        const idx =
+          childEl.props.index && childEl.props.index !== '0'
+            ? childEl.props.index
+            : i
         return React.cloneElement(childEl, {
           index: `${index}-${idx}`,
         })

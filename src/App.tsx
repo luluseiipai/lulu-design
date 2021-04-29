@@ -21,7 +21,7 @@ function App() {
             onSelect={(index) => {
               console.log(index)
             }}>
-            <MenuItem>cool link</MenuItem>
+            <MenuItem index='9'>cool link</MenuItem>
             <MenuItem disabled>cool link 2</MenuItem>
             <MenuItem>cool link 3</MenuItem>
             <SubMenu title='dropdown'>

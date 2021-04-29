@@ -57,6 +57,7 @@ const Menu: React.FC<MenuProps> = (props) => {
     return React.Children.map(children, (child, index) => {
       const childEl = child as React.FunctionComponentElement<MenuItemProps>
       const { displayName } = childEl.type
+      console.log('menu: ', childEl.props.index)
       if (displayName === 'MenuItem' || displayName === 'SubMenu') {
         const idx =
           childEl.props.index && childEl.props.index !== '0'
