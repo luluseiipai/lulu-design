@@ -1,27 +1,30 @@
 import React, { useEffect } from 'react'
 import Button, { ButtonType, ButtonSize } from './components/Button/Button'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import Alert from './components/Alert/Alert'
 import Menu from './components/Menu/Menu'
 import MenuItem from './components/Menu/MenuItem'
 import SubMenu from './components/Menu/SubMenu'
+import Icon from './components/Icon/Icon'
+
+library.add(fas)
 
 function App() {
   useEffect(() => {})
   return (
     <div className='App'>
       <header className='App-header'>
-        <FontAwesomeIcon icon={faCoffee} size='lg' />
+        <Icon theme='danger' icon='comment' size='10x' />
         <div className='menu' style={{ margin: '50px' }}>
           <Menu
             defaultIndex={'0'}
-            mode='vertical'
+            mode='horizontal'
             defaultOpenSubMenus={['3']}
             onSelect={(index) => {
               console.log(index)
             }}>
-            <MenuItem index='9'>cool link</MenuItem>
+            <MenuItem>cool link</MenuItem>
             <MenuItem disabled>cool link 2</MenuItem>
             <MenuItem>cool link 3</MenuItem>
             <SubMenu title='dropdown'>
@@ -66,9 +69,6 @@ function App() {
             href='https://luluonline.cn'>
             123
           </Button>
-        </div>
-        <div className='split' style={{ marginBottom: '20px' }}>
-          ***
         </div>
         <div className='alert'>
           <Alert closable title='测试' description='test' />
