@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import classNames from 'classnames'
 import { MenuContext } from './Menu'
 import { MenuItemProps } from './MenuItem'
+import Icon from '../Icon/Icon'
+import Transition from '../Transition/Transition'
 
 export interface SubMenuProps {
   index?: string
@@ -24,6 +26,8 @@ const SubMenu: React.FC<SubMenuProps> = ({
   const [menuOpen, setOpen] = useState(isOpened)
   const classes = classNames('menu-item subMenu-item', className, {
     'is-active': context.index === index,
+    'is-opened': menuOpen,
+    'is-vertical': context.mode === 'vertical',
   })
 
   const handleClick = (e: React.MouseEvent) => {
@@ -76,13 +80,18 @@ const SubMenu: React.FC<SubMenuProps> = ({
         'Warning: Menu has a child which is not a MenuItem component'
       )
     })
-    return <ul className={subMenuClasses}>{childrenComponent}</ul>
+    return (
+      <Transition in={menuOpen} timeout={300} animation='zoom-in-top'>
+        <ul className={subMenuClasses}>{childrenComponent}</ul>
+      </Transition>
+    )
   }
 
   return (
     <li className={classes} {...hoverEvent}>
       <div className='subMenu-title' {...clickEvent}>
         {title}
+        <Icon icon='angle-down' className='arrow-icon' />
       </div>
       {renderChildren()}
     </li>

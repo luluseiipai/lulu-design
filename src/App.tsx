@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react'
-import Button, { ButtonType, ButtonSize } from './components/Button/Button'
+import React, { useState } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import Alert from './components/Alert/Alert'
 import Menu from './components/Menu/Menu'
 import MenuItem from './components/Menu/MenuItem'
 import SubMenu from './components/Menu/SubMenu'
 import Icon from './components/Icon/Icon'
+import Transition from './components/Transition/Transition'
+import Button from './components/Button/Button'
 
 library.add(fas)
 
 function App() {
-  useEffect(() => {})
+  const [show, setShow] = useState(false)
   return (
     <div className='App'>
       <header className='App-header'>
@@ -34,48 +34,32 @@ function App() {
             </SubMenu>
             <MenuItem>cool link 3</MenuItem>
           </Menu>
-        </div>
-        <div className='button' style={{ margin: '20px' }}>
-          <button className='test'>test</button>
-          <Button disabled className='test'>
-            hello
-          </Button>
           <Button
-            btnType={ButtonType.Primary}
-            size={ButtonSize.Large}
-            autoFocus>
-            123
-          </Button>
-          <Button
-            btnType={ButtonType.Primary}
+            size='lg'
             onClick={() => {
-              console.log(123)
+              setShow(!show)
             }}>
-            123
-          </Button>
-          <Button btnType={ButtonType.Warning}>123</Button>
-          <Button btnType={ButtonType.Danger}>123</Button>
-          <Button>123</Button>
-          <Button
-            btnType={ButtonType.Link}
-            size={ButtonSize.Small}
-            disabled
-            href='https://luluonline.cn'>
-            123
-          </Button>
-          <Button
-            btnType={ButtonType.Link}
-            size={ButtonSize.Small}
-            href='https://luluonline.cn'>
-            123
+            toggle
           </Button>
         </div>
-        <div className='alert'>
-          <Alert closable title='测试' description='test' />
-          <Alert title='测试' type='success' />
-          <Alert title='测试' type='warning' />
-          <Alert title='测试' type='danger' />
-        </div>
+        <Transition in={show} timeout={300} animation='zoom-in-left'>
+          <div>
+            <p>ediewopgnwpgiwngpoeirngpwignrpgwngiprngpwgnwpg t</p>
+            <p>
+              editediewopgnwpgiwngpoeirngpwignrpgwngiprngpwgnwpgediewopgnwpgiwngpoeirngpwignrpgwngiprngpwgnwpg
+            </p>
+            <p>ediediewopgnwpgiwngpoeirngpwignrpgwngiprngpwgnwpgt</p>
+            <p>edit</p>
+            <p>
+              edediewopgnwpgiwngpoeirngpwignrpgwngiprngpwgnwpgediewopgnwpgiwngpoeirngpwignrpgwngiprngpwgnwpgit
+            </p>
+          </div>
+        </Transition>
+        <Transition in={show} timeout={300} animation='zoom-in-right'>
+          <Button btnType='primary' size='lg'>
+            a large btn
+          </Button>
+        </Transition>
       </header>
     </div>
   )
