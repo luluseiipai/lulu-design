@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import Menu from './components/Menu/menu'
-import MenuItem from './components/Menu/menuItem'
-import SubMenu from './components/Menu/subMenu'
-import Icon from './components/Icon/icon'
-import Transition from './components/Transition/transition'
-import Button from './components/Button/button'
+import Menu from './components/Menu/Menu'
+import MenuItem from './components/Menu/MenuItem'
+import SubMenu from './components/Menu/SubMenu'
+import Icon from './components/Icon/Icon'
+import Transition from './components/Transition/Transition'
+import Button from './components/Button'
 
 library.add(fas)
 

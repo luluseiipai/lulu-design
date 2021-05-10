@@ -8,7 +8,7 @@ import React, {
   cloneElement,
 } from 'react'
 import classNames from 'classnames'
-import { MenuItemProps } from './menuItem'
+import { MenuItemProps } from './MenuItem'
 
 type MenuMode = 'horizontal' | 'vertical'
 type selectCallback = (selectedIndex: string) => void
