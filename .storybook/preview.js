@@ -8,4 +8,13 @@ export const parameters = {
   },
 }
 
+export const decorators = [
+  (Story) => (
+    <div style={{ margin: '2em' }}>
+      <h4 style={{ marginBottom: '10px' }}>组件演示</h4>
+      <Story />
+    </div>
+  ),
+]
+
 import '../src/styles/index.scss'

@@ -1,38 +1,66 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
-
-import Button, { ButtonProps } from './button'
+// import { action } from '@storybook/addon-actions'
+import { Button, ButtonProps } from './button'
 
 export default {
-  title: 'Components/Button',
+  title: '组件/Button',
   component: Button,
   argTypes: {
-    backgroundColor: { control: 'color' },
     size: {
+      defaultValue: 'normal',
       control: {
         type: 'radio',
         options: ['lg', 'sm', 'normal'],
       },
+      table: {
+        category: 'Sizes',
+        subcategory: 'Button size',
+      },
     },
     btnType: {
+      defaultValue: 'default',
       control: {
         type: 'radio',
         options: ['primary', 'default', 'warning', 'danger', 'link'],
       },
+      table: {
+        category: 'Colors',
+        subcategory: 'Button style',
+      },
     },
-    disabled: { control: 'boolean' },
+    disabled: {
+      defaultValue: false,
+      control: 'boolean',
+    },
+    onClick: {
+      description: '点击函数',
+      table: {
+        category: 'Events',
+        subcategory: 'Button Event',
+      },
+    },
   },
 } as Meta
+
+// const styles: React.CSSProperties = {
+//   textAlign: 'center',
+// }
+
+// const CenterDecorator = (storyFn: any) => <div style={styles}>{storyFn()}</div>
 
 const Template: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>
 
 export const Default = Template.bind({})
 Default.args = {
   btnType: 'default',
-  onClick: action('clicked'),
+  // onClick: action('clicked'),
 }
-Default.storyName = '默认按钮'
+Default.storyName = 'Button'
+// Default.decorators = [CenterDecorator]
+Default.parameters = {
+  docs: {},
+}
 
 export const Size = () => (
   <>
@@ -41,12 +69,14 @@ export const Size = () => (
     <Button size='sm'>small button</Button>
   </>
 )
-Size.storyName = '不同尺寸的按钮'
+Size.storyName = '不同尺寸的 Button'
 
 export const Type = () => (
   <>
     <Button btnType='primary'>primary button</Button>
-    <Button btnType='default'>default button</Button>
+    <Button btnType='default' disabled>
+      default button
+    </Button>
     <Button btnType='danger'>danger button</Button>
     <Button btnType='warning'>warning button</Button>
     <Button btnType='link' href='#'>
@@ -54,4 +84,5 @@ export const Type = () => (
     </Button>
   </>
 )
-Type.storyName = '不同类型的按钮'
+Type.storyName = '不同状态的 Button'
+// Type.decorators = [CenterDecorator]
