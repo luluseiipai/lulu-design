@@ -31,7 +31,7 @@ export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
  *
  * ## 引用方法
  *
- * ```js
+ * ```ts
  * import { Button } from 'lulu-ui'
  * ```
  */

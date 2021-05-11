@@ -1,4 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, {
+  FC,
+  useContext,
+  useState,
+  MouseEvent,
+  Children,
+  FunctionComponentElement,
+  cloneElement,
+} from 'react'
 import classNames from 'classnames'
 import { MenuContext } from './Menu'
 import { MenuItemProps } from './MenuItem'
@@ -11,7 +19,7 @@ export interface SubMenuProps {
   className?: string
 }
 
-const SubMenu: React.FC<SubMenuProps> = ({
+export const SubMenu: FC<SubMenuProps> = ({
   index,
   title,
   children,
@@ -30,13 +38,13 @@ const SubMenu: React.FC<SubMenuProps> = ({
     'is-vertical': context.mode === 'vertical',
   })
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: MouseEvent) => {
     e.preventDefault()
     setOpen(!menuOpen)
   }
 
   let timer: any
-  const handleMouse = (e: React.MouseEvent, toggle: boolean) => {
+  const handleMouse = (e: MouseEvent, toggle: boolean) => {
     clearTimeout(timer)
     e.preventDefault()
     timer = setTimeout(() => {
@@ -52,10 +60,10 @@ const SubMenu: React.FC<SubMenuProps> = ({
   const hoverEvent =
     context.mode === 'horizontal'
       ? {
-          onMouseEnter: (e: React.MouseEvent) => {
+          onMouseEnter: (e: MouseEvent) => {
             handleMouse(e, true)
           },
-          onMouseLeave: (e: React.MouseEvent) => {
+          onMouseLeave: (e: MouseEvent) => {
             handleMouse(e, false)
           },
         }
@@ -65,14 +73,14 @@ const SubMenu: React.FC<SubMenuProps> = ({
     const subMenuClasses = classNames('subMenu', {
       'menu-opened': menuOpen,
     })
-    const childrenComponent = React.Children.map(children, (child, i) => {
-      const childEl = child as React.FunctionComponentElement<MenuItemProps>
+    const childrenComponent = Children.map(children, (child, i) => {
+      const childEl = child as FunctionComponentElement<MenuItemProps>
       if (childEl.type.displayName === 'MenuItem') {
         const idx =
           childEl.props.index && childEl.props.index !== '0'
             ? childEl.props.index
             : i
-        return React.cloneElement(childEl, {
+        return cloneElement(childEl, {
           index: `${index}-${idx}`,
         })
       }

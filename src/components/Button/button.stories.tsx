@@ -56,11 +56,7 @@ Default.args = {
   btnType: 'default',
   // onClick: action('clicked'),
 }
-Default.storyName = 'Button'
 // Default.decorators = [CenterDecorator]
-Default.parameters = {
-  docs: {},
-}
 
 export const Size = () => (
   <>

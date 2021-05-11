@@ -14,11 +14,15 @@ type MenuMode = 'horizontal' | 'vertical'
 type selectCallback = (selectedIndex: string) => void
 
 export interface MenuProps {
+  /**设置默认 active 的菜单项索引值 */
   defaultIndex?: string
   className?: string
+  /**设置菜类型 横向纵向 */
   mode?: MenuMode
   style?: CSSProperties
+  /**设置默认展开列表 只在纵向模式有效 */
   defaultOpenSubMenus?: string[]
+  /**选中菜单项后回调 */
   onSelect?: selectCallback
 }
 
@@ -31,7 +35,17 @@ interface IMenuContext {
 
 export const MenuContext = createContext<IMenuContext>({ index: '0' })
 
-const Menu: FC<MenuProps> = (props) => {
+/**
+ * 为网站提供导航功能的菜单。支持横向纵向两种模式，支持下拉菜单。
+ *
+ * ## 引用方法
+ *
+ * ```ts
+ * import { Menu } from 'lulu-ui'
+ * // 然后可以使用 Menu.Item 和 Menu.SubMenu 访问选项和子下拉菜单组件
+ * ```
+ */
+export const Menu: FC<MenuProps> = (props) => {
   const {
     className,
     defaultIndex,
