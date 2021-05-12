@@ -4,9 +4,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import Menu from './components/Menu/Menu'
 import MenuItem from './components/Menu/MenuItem'
 import SubMenu from './components/Menu/SubMenu'
-import Icon from './components/Icon/Icon'
-import Transition from './components/Transition/Transition'
+import Icon from './components/Icon/'
+import Transition from './components/Transition/'
 import Button from './components/Button'
+import { Alert } from './components/Alert'
 
 library.add(fas)
 
@@ -60,6 +61,7 @@ function App() {
             a large btn
           </Button>
         </Transition>
+        <Alert title='标题' message='123' type='success' />
       </header>
     </div>
   )

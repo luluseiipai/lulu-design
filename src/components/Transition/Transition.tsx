@@ -8,12 +8,12 @@ type AnimationName =
   | 'zoom-in-left'
   | 'zoom-in-bottom'
 
-type TransitionProps = CSSTransitionProps & {
+export type TransitionProps = CSSTransitionProps & {
   animation?: AnimationName
   wrapper?: boolean
 }
 
-const Transition: React.FC<TransitionProps> = (props) => {
+export const Transition: React.FC<TransitionProps> = (props) => {
   const { children, classNames, animation, wrapper, ...restProps } = props
   return (
     <CSSTransition

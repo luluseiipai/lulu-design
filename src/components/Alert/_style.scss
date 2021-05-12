@@ -4,15 +4,14 @@ $alert-color: (
   'warning': $warning,
   'danger': $danger,
 );
-
 .lu-alert {
   position: relative;
   padding: $alert-padding-y $alert-padding-x;
   border-radius: $alert-border-radius;
   border: $alert-border-width solid transparent;
   margin-bottom: $alert-margin-bottom;
-  .lu-alert-title {
-    font-weight: $alert-title-font-weight;
+  .bold-title {
+    font-weight: $font-weight-bold;
   }
   .lu-alert-desc {
     font-size: $alert-description-font-size;

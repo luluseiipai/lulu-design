@@ -10,7 +10,7 @@ const testProps: AlertProps = {
 const typeProps: AlertProps = {
   ...testProps,
   type: 'success',
-  description: 'desc',
+  message: 'desc',
   closable: false,
 }
 
