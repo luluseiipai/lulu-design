@@ -3,11 +3,11 @@ import { Tab, TabProps } from './Tab'
 import { TabItem, TabItemProps } from './TabItem'
 
 export type ITabProps = FC<TabProps> & {
-  item: FC<TabItemProps>
+  Item: FC<TabItemProps>
 }
 
 const TransProps = Tab as ITabProps
 
-TransProps.item = TabItem
+TransProps.Item = TabItem
 
 export default TransProps

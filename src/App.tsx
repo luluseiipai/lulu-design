@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Tab from './components/Tab/Tab'
 import TabItem from './components/Tab/TabItem'
+import Icon from './components/Icon'
 
 library.add(fas)
 
@@ -15,7 +16,15 @@ function App() {
         <TabItem label='disabled' disabled>
           disabled
         </TabItem>
-        <TabItem label='tab4'>测试 4 内容</TabItem>
+        <TabItem
+          label={
+            <div>
+              <Icon icon='check' />
+              123
+            </div>
+          }>
+          测试 4 内容
+        </TabItem>
       </Tab>
     </div>
   )

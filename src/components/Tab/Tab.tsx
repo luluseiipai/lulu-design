@@ -16,6 +16,16 @@ export interface TabProps {
   onSelect?: selectCallback
 }
 
+/**
+ * 选项卡切换组件。
+ * 提供平级的区域将大块内容进行收纳和展现，保持界面整洁。
+ *
+ * ### 引用方法
+ *
+ * ~~~js
+ * import { Tabs } from 'vikingship'
+ * ~~~
+ */
 export const Tab: FC<TabProps> = (props) => {
   const { className, mode, defaultIndex, onSelect, children } = props
   const [curActive, setCurActive] = useState(defaultIndex)
