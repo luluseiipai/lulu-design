@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  render,
-  fireEvent,
-  RenderResult,
-  getByText,
-} from '@testing-library/react'
+import { render, fireEvent, RenderResult } from '@testing-library/react'
 // import '@testing-library/jest-dom/extend-expect'
 import { Tab, TabProps } from './Tab'
 import { TabItem } from './TabItem'
