@@ -67,7 +67,7 @@ export const Tab: FC<TabProps> = (props) => {
   }
 
   return (
-    <div className={`lu-tab ${className}`}>
+    <div className={`lu-tab ${className}`} data-testid='test-tab'>
       <ul className={navClasses}>{renderNavLinks()}</ul>
       <div className='lu-tab-content'>{renderContent()}</div>
     </div>

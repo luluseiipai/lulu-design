@@ -10,12 +10,12 @@ function App() {
   return (
     <div className='App'>
       <Tab mode='card' onSelect={(index) => console.log(index)}>
-        <TabItem label='123'>测试 1 内容</TabItem>
-        <TabItem label='234'>测试 2 内容</TabItem>
-        <TabItem label='345'>测试 3 内容</TabItem>
-        <TabItem label='456' disabled>
-          测试 4 内容
+        <TabItem label='tab1'>测试 1 内容</TabItem>
+        <TabItem label='tab2'>测试 2 内容</TabItem>
+        <TabItem label='disabled' disabled>
+          disabled
         </TabItem>
+        <TabItem label='tab4'>测试 4 内容</TabItem>
       </Tab>
     </div>
   )

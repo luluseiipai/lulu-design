@@ -10,6 +10,19 @@ import Menu, { MenuProps } from './Menu'
 import MenuItem from './MenuItem'
 import SubMenu from './SubMenu'
 
+jest.mock('../Icon/Icon.tsx', () => {
+  return () => {
+    return <i className='fa' />
+  }
+})
+jest.mock('react-transition-group', () => {
+  return {
+    CSSTransition: (props: any) => {
+      return props.children
+    },
+  }
+})
+
 const testProps: MenuProps = {
   defaultIndex: '0',
   onSelect: jest.fn(),
@@ -22,21 +35,19 @@ const testVerProps: MenuProps = {
   defaultOpenSubMenus: ['4'],
 }
 
-const generateMenu = (props: MenuProps) => {
-  return (
-    <Menu {...props}>
-      <MenuItem>active</MenuItem>
-      <MenuItem disabled>disabled</MenuItem>
-      <MenuItem>xyz</MenuItem>
-      <SubMenu title='dropdown'>
-        <MenuItem>drop 1</MenuItem>
-      </SubMenu>
-      <SubMenu title='opened'>
-        <MenuItem>opened1</MenuItem>
-      </SubMenu>
-    </Menu>
-  )
-}
+const generateMenu = (props: MenuProps) => (
+  <Menu {...props}>
+    <MenuItem>active</MenuItem>
+    <MenuItem disabled>disabled</MenuItem>
+    <MenuItem>xyz</MenuItem>
+    <SubMenu title='dropdown'>
+      <MenuItem>drop 1</MenuItem>
+    </SubMenu>
+    <SubMenu title='opened'>
+      <MenuItem>opened1</MenuItem>
+    </SubMenu>
+  </Menu>
+)
 
 const createStyleFile = () => {
   const cssFile = `
