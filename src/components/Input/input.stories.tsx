@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { Story, Meta } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
@@ -9,6 +9,12 @@ export default {
   component: Input,
 } as Meta
 
+const styles: CSSProperties = {
+  padding: '20px 40px',
+  width: '500px',
+}
+const InputDecorator = (storyFn: any) => <div style={styles}>{storyFn()}</div>
+
 const Template: Story<InputProps> = (args) => <Input {...args} />
 
 export const Default = Template.bind({})
@@ -17,6 +23,7 @@ Default.args = {
   onChange: action('changed'),
 }
 Default.storyName = 'Input'
+Default.decorators = [InputDecorator]
 
 export const DisabledInput = Template.bind({})
 DisabledInput.args = {
@@ -24,6 +31,7 @@ DisabledInput.args = {
   disabled: true,
 }
 DisabledInput.storyName = '被禁用的Input'
+DisabledInput.decorators = [InputDecorator]
 
 export const IconInput = Template.bind({})
 IconInput.args = {
@@ -31,6 +39,7 @@ IconInput.args = {
   placeholder: 'input width icon',
 }
 IconInput.storyName = '带图标的Input'
+IconInput.decorators = [InputDecorator]
 
 export const SizeInput = () => (
   <>
@@ -39,6 +48,7 @@ export const SizeInput = () => (
   </>
 )
 SizeInput.storyName = '不同尺寸的Input'
+SizeInput.decorators = [InputDecorator]
 
 export const ExtraInput = () => (
   <>
@@ -46,3 +56,4 @@ export const ExtraInput = () => (
     <Input defaultValue='google' append='.com' />
   </>
 )
+ExtraInput.decorators = [InputDecorator]
