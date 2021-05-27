@@ -1,8 +1,8 @@
 import React, { CSSProperties } from 'react'
-import { Story, Meta } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 
-import { AutoComplete, AutoCompleteProps, DataSourceType } from './AutoComplete'
+import { AutoComplete, DataSourceType } from './AutoComplete'
 
 export default {
   title: '组件/AutoComplete',
@@ -110,11 +110,11 @@ export const asyncComplete = () => {
   }
 
   const renderOption = (item: DataSourceType) => {
-    const itemWithNumber = item as DataSourceType<LakerPlayerProps>
+    const itemWithGithub = item as DataSourceType<GithubUserProps>
     return (
       <>
-        <b>名字: {itemWithNumber.value}</b>
-        <span>球衣号码: {itemWithNumber.number}</span>
+        <b>login: {itemWithGithub.login}</b>
+        <span>url: {itemWithGithub.url}</span>
       </>
     )
   }

@@ -1,5 +1,15 @@
-import React, { ChangeEvent, FC, ReactElement, useState } from 'react'
+import React, {
+  ChangeEvent,
+  FC,
+  ReactElement,
+  useEffect,
+  useState,
+  KeyboardEvent,
+} from 'react'
+import classNames from 'classnames'
 import { InputProps, Input } from '../Input/Input'
+import Icon from '../Icon'
+import useDebounce from '../../hooks/useDebounce'
 
 interface DataSourceObject {
   value: string
@@ -29,17 +39,21 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     value,
     ...restProps
   } = props
-  const [inputValue, setInputValue] = useState(value)
+  const [inputValue, setInputValue] = useState(value as string)
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
+  const [loading, setLoading] = useState(false)
+  const [highlightIndex, setHighlightIndex] = useState(-1)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim()
-    setInputValue(value)
-    if (value) {
-      const result = fetchSuggestions(value)
+  const debounceValue = useDebounce(inputValue, 500)
+
+  useEffect(() => {
+    if (debounceValue) {
+      const result = fetchSuggestions(debounceValue)
       if (result instanceof Promise) {
         console.log('triggererd')
+        setLoading(true)
         result.then((data) => {
+          setLoading(false)
           setSuggestions(data)
         })
       } else {
@@ -47,6 +61,41 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
       }
     } else {
       setSuggestions([])
+    }
+    setHighlightIndex(-1)
+  }, [debounceValue, fetchSuggestions])
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim()
+    setInputValue(value)
+  }
+
+  const highlight = (index: number) => {
+    if (index < 0) index = 0
+    if (index >= suggestions.length) {
+      index = suggestions.length - 1
+    }
+    setHighlightIndex(index)
+  }
+
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    switch (e.code) {
+      case 'Enter':
+        if (suggestions[highlightIndex]) {
+          handleSelect(suggestions[highlightIndex])
+        }
+        break
+      case 'ArrowUp':
+        highlight(highlightIndex - 1)
+        break
+      case 'ArrowDown':
+        highlight(highlightIndex + 1)
+        break
+      case 'Escape':
+        setSuggestions([])
+        break
+      default:
+        break
     }
   }
 
@@ -66,8 +115,14 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     return (
       <ul>
         {suggestions.map((item, index) => {
+          const classes = classNames('suggestion-item', {
+            'item-highlighted': index === highlightIndex,
+          })
           return (
-            <li key={index} onClick={() => handleSelect(item)}>
+            <li
+              className={classes}
+              key={index}
+              onClick={() => handleSelect(item)}>
               {renderTemplate(item)}
             </li>
           )
@@ -78,7 +133,17 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   return (
     <div className='lu-auto-complete'>
-      <Input value={inputValue} {...restProps} onChange={handleChange} />
+      <Input
+        value={inputValue}
+        {...restProps}
+        onChange={handleChange}
+        onKeyUp={handleKeyUp}
+      />
+      {loading && (
+        <ul>
+          <Icon icon='spinner' spin />
+        </ul>
+      )}
       {suggestions.length > 0 && generateDropdown()}
     </div>
   )
