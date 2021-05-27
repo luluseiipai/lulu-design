@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
   KeyboardEvent,
+  useRef,
 } from 'react'
 import classNames from 'classnames'
 import { InputProps, Input } from '../Input/Input'
@@ -43,6 +44,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [loading, setLoading] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
+  const triggerSearch = useRef(false)
 
   const debounceValue = useDebounce(inputValue, 500)
 
