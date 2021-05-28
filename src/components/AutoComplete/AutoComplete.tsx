@@ -11,6 +11,7 @@ import classNames from 'classnames'
 import { InputProps, Input } from '../Input/Input'
 import Icon from '../Icon'
 import useDebounce from '../../hooks/useDebounce'
+import useClickOutside from '../../hooks/useClickOutside'
 
 interface DataSourceObject {
   value: string
@@ -45,14 +46,17 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const [loading, setLoading] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
   const triggerSearch = useRef(false)
+  const componentRef = useRef<HTMLDivElement>(null)
 
   const debounceValue = useDebounce(inputValue, 500)
+  useClickOutside(componentRef, () => {
+    setSuggestions([])
+  })
 
   useEffect(() => {
-    if (debounceValue) {
+    if (debounceValue && triggerSearch.current) {
       const result = fetchSuggestions(debounceValue)
       if (result instanceof Promise) {
-        console.log('triggererd')
         setLoading(true)
         result.then((data) => {
           setLoading(false)
@@ -70,6 +74,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim()
     setInputValue(value)
+    triggerSearch.current = true
   }
 
   const highlight = (index: number) => {
@@ -107,6 +112,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     if (onSelect) {
       onSelect(item)
     }
+    triggerSearch.current = false
   }
 
   const renderTemplate = (item: DataSourceType) => {
@@ -134,7 +140,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   }
 
   return (
-    <div className='lu-auto-complete'>
+    <div className='lu-auto-complete' ref={componentRef}>
       <Input
         value={inputValue}
         {...restProps}

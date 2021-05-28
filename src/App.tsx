@@ -4,7 +4,9 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import Tab from './components/Tab/Tab'
 import TabItem from './components/Tab/TabItem'
 import Icon from './components/Icon'
-import AutoComplete from './components/AutoComplete/AutoComplete'
+import AutoComplete, {
+  DataSourceType,
+} from './components/AutoComplete/AutoComplete'
 
 library.add(fas)
 const lakers = [
@@ -23,10 +25,12 @@ const lakers = [
 ]
 function App() {
   const handleFetch = (query: string) => {
-    return lakers.filter((name) => name.includes(query))
+    return lakers
+      .filter((name) => name.includes(query))
+      .map((name) => ({ value: name }))
   }
-  const renderOption = (item: string) => {
-    return <h2>Name: {item}</h2>
+  const renderOption = (item: DataSourceType) => {
+    return <h2>Name: {item.value}</h2>
   }
   return (
     <div className='App'>

@@ -95,6 +95,7 @@ export const CustomComplete = () => {
 }
 
 CustomComplete.storyName = '支持自定义的下拉选项'
+CustomComplete.decorators = [Decorator]
 
 export const asyncComplete = () => {
   const handleFetch = (query: string) => {
@@ -121,10 +122,12 @@ export const asyncComplete = () => {
 
   return (
     <AutoComplete
-      placeholder='输入湖人队球员英文名试试'
+      placeholder='输入github用户名试试'
       fetchSuggestions={handleFetch}
       renderOption={renderOption}
       onSelect={action('selected!')}
     />
   )
 }
+asyncComplete.storyName = '支持异步请求的下拉选项'
+asyncComplete.decorators = [Decorator]
