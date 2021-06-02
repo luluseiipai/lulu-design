@@ -121,7 +121,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const generateDropdown = () => {
     return (
-      <ul>
+      <ul className='lu-suggestion-list'>
         {suggestions.map((item, index) => {
           const classes = classNames('suggestion-item', {
             'item-highlighted': index === highlightIndex,
@@ -148,9 +148,9 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         onKeyUp={handleKeyUp}
       />
       {loading && (
-        <ul>
+        <div className='suggestion-loading-icon'>
           <Icon icon='spinner' spin />
-        </ul>
+        </div>
       )}
       {suggestions.length > 0 && generateDropdown()}
     </div>
