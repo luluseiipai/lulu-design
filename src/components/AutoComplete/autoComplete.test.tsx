@@ -74,7 +74,15 @@ describe('test AutoComplete Component', () => {
     expect(testProps.onSelect).toHaveBeenCalledWith({ value: 'ab', number: 11 })
     expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
   })
-  it('click outside should hide the dropdown', () => {})
+  it('click outside should hide the dropdown', async () => {
+    // input change
+    fireEvent.change(inputNode, { target: { value: 'a' } })
+    await waitFor(() => {
+      expect(wrapper.queryByText('ab')).toBeInTheDocument()
+    })
+    fireEvent.click(document)
+    expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
+  })
   it('renderOption should generate the right template', () => {})
   it('async fetchSuggestion should works find', () => {})
 })
