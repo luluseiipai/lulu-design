@@ -10,6 +10,7 @@ import React, {
 import classNames from 'classnames'
 import { InputProps, Input } from '../Input/Input'
 import Icon from '../Icon'
+import Transition from '../Transition'
 import useDebounce from '../../hooks/useDebounce'
 import useClickOutside from '../../hooks/useClickOutside'
 
@@ -45,12 +46,13 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
   const [loading, setLoading] = useState(false)
   const [highlightIndex, setHighlightIndex] = useState(-1)
+  const [showDropDown, setShowDropDown] = useState(false)
   const triggerSearch = useRef(false)
   const componentRef = useRef<HTMLDivElement>(null)
 
   const debounceValue = useDebounce(inputValue, 500)
   useClickOutside(componentRef, () => {
-    setSuggestions([])
+    setShowDropDown(false)
   })
 
   useEffect(() => {
@@ -61,12 +63,18 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         result.then((data) => {
           setLoading(false)
           setSuggestions(data)
+          if (data.length > 0) {
+            setShowDropDown(true)
+          }
         })
       } else {
         setSuggestions(result)
+        if (result.length > 0) {
+          setShowDropDown(true)
+        }
       }
     } else {
-      setSuggestions([])
+      setShowDropDown(false)
     }
     setHighlightIndex(-1)
   }, [debounceValue, fetchSuggestions])
@@ -99,7 +107,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         highlight(highlightIndex + 1)
         break
       case 'Escape':
-        setSuggestions([])
+        setShowDropDown(false)
         break
       default:
         break
@@ -108,7 +116,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const handleSelect = (item: DataSourceType) => {
     setInputValue(item.value)
-    setSuggestions([])
+    setShowDropDown(false)
     if (onSelect) {
       onSelect(item)
     }
@@ -121,21 +129,34 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const generateDropdown = () => {
     return (
-      <ul className='lu-suggestion-list'>
-        {suggestions.map((item, index) => {
-          const classes = classNames('suggestion-item', {
-            'item-highlighted': index === highlightIndex,
-          })
-          return (
-            <li
-              className={classes}
-              key={index}
-              onClick={() => handleSelect(item)}>
-              {renderTemplate(item)}
-            </li>
-          )
-        })}
-      </ul>
+      <Transition
+        in={showDropDown || loading}
+        animation='zoom-in-top'
+        timeout={300}
+        onExited={() => {
+          setSuggestions([])
+        }}>
+        <ul className='lu-suggestion-list'>
+          {loading && (
+            <div className='suggestion-loading-icon'>
+              <Icon icon='spinner' spin />
+            </div>
+          )}
+          {suggestions.map((item, index) => {
+            const classes = classNames('suggestion-item', {
+              'is-active': index === highlightIndex,
+            })
+            return (
+              <li
+                className={classes}
+                key={index}
+                onClick={() => handleSelect(item)}>
+                {renderTemplate(item)}
+              </li>
+            )
+          })}
+        </ul>
+      </Transition>
     )
   }
 
@@ -147,12 +168,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
         onChange={handleChange}
         onKeyUp={handleKeyUp}
       />
-      {loading && (
-        <div className='suggestion-loading-icon'>
-          <Icon icon='spinner' spin />
-        </div>
-      )}
-      {suggestions.length > 0 && generateDropdown()}
+      {generateDropdown()}
     </div>
   )
 }
