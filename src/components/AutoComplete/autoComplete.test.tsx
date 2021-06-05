@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react'
 
-import { AutoComplete, AutoCompleteProps } from './AutoComplete'
+import { AutoComplete, AutoCompleteProps, DataSourceType } from './AutoComplete'
 
 config.disabled = true // 全部异步性变为同步，动画等于无
 
@@ -24,6 +24,30 @@ const testProps: AutoCompleteProps = {
   },
   onSelect: jest.fn(),
   placeholder: 'auto-complete',
+}
+
+const renderOption = (item: DataSourceType) => {
+  const itemWithNumber = item as DataSourceType<{
+    value: string
+    number: number
+  }>
+  return <>name: {itemWithNumber.value}</>
+}
+
+const testPropsWithCustomRender: AutoCompleteProps = {
+  ...testProps,
+  placeholder: 'auto-complete-2',
+  renderOption,
+}
+
+const testPropsWithPromise: AutoCompleteProps = {
+  ...testProps,
+  fetchSuggestions: jest.fn((query) => {
+    return Promise.resolve(
+      testArray.filter((item) => item.value.includes(query))
+    )
+  }),
+  placeholder: 'auto-complete-3',
 }
 
 let wrapper: RenderResult, inputNode: HTMLInputElement
@@ -75,7 +99,6 @@ describe('test AutoComplete Component', () => {
     expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
   })
   it('click outside should hide the dropdown', async () => {
-    // input change
     fireEvent.change(inputNode, { target: { value: 'a' } })
     await waitFor(() => {
       expect(wrapper.queryByText('ab')).toBeInTheDocument()
@@ -83,6 +106,25 @@ describe('test AutoComplete Component', () => {
     fireEvent.click(document)
     expect(wrapper.queryByText('ab')).not.toBeInTheDocument()
   })
-  it('renderOption should generate the right template', () => {})
-  it('async fetchSuggestion should works find', () => {})
+  it('renderOption should generate the right template', async () => {
+    const wrapper = render(<AutoComplete {...testPropsWithCustomRender} />)
+    const inputNode = wrapper.getByPlaceholderText(
+      'auto-complete-2'
+    ) as HTMLInputElement
+    fireEvent.change(inputNode, { target: { value: 'a' } })
+    await waitFor(() => {
+      expect(wrapper.queryByText('name: ab')).toBeInTheDocument()
+    })
+  })
+  it('async fetchSuggestion should works find', async () => {
+    // const wrapper = render(<AutoComplete {...testPropsWithPromise} />)
+    // const inputNode = wrapper.getByPlaceholderText(
+    //   'auto-complete-3'
+    // ) as HTMLInputElement
+    fireEvent.change(inputNode, { target: { value: 'a' } })
+    await waitFor(() => {
+      // expect(testPropsWithPromise.fetchSuggestions).toHaveBeenCalled()
+      expect(wrapper.queryByText('ab')).toBeInTheDocument()
+    })
+  })
 })
