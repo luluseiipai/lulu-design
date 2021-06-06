@@ -10,7 +10,11 @@ import {
 import { AutoComplete, AutoCompleteProps, DataSourceType } from './AutoComplete'
 
 config.disabled = true // 全部异步性变为同步，动画等于无
-
+// jest.mock('../Icon/icon', () => {
+//   return (props: any) => {
+//     return <span onClick={props.onClick}>{props.icon}</span>
+//   }
+// })
 const testArray = [
   { value: 'ab', number: 11 },
   { value: 'abc', number: 1 },
@@ -42,14 +46,13 @@ const testPropsWithCustomRender: AutoCompleteProps = {
 
 const testPropsWithPromise: AutoCompleteProps = {
   ...testProps,
-  fetchSuggestions: jest.fn((query) => {
+  placeholder: 'auto-complete-3',
+  fetchSuggestions: (query) => {
     return Promise.resolve(
       testArray.filter((item) => item.value.includes(query))
     )
-  }),
-  placeholder: 'auto-complete-3',
+  },
 }
-
 let wrapper: RenderResult, inputNode: HTMLInputElement
 
 describe('test AutoComplete Component', () => {
@@ -117,10 +120,10 @@ describe('test AutoComplete Component', () => {
     })
   })
   it('async fetchSuggestion should works find', async () => {
-    // const wrapper = render(<AutoComplete {...testPropsWithPromise} />)
-    // const inputNode = wrapper.getByPlaceholderText(
-    //   'auto-complete-3'
-    // ) as HTMLInputElement
+    const wrapper = render(<AutoComplete {...testPropsWithPromise} />)
+    const inputNode = wrapper.getByPlaceholderText(
+      'auto-complete-3'
+    ) as HTMLInputElement
     fireEvent.change(inputNode, { target: { value: 'a' } })
     await waitFor(() => {
       // expect(testPropsWithPromise.fetchSuggestions).toHaveBeenCalled()
