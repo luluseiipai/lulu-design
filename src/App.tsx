@@ -7,6 +7,7 @@ import Icon from './components/Icon'
 import AutoComplete, {
   DataSourceType,
 } from './components/AutoComplete/AutoComplete'
+import Alert from './components/Alert'
 
 library.add(fas)
 const lakers = [
@@ -34,6 +35,7 @@ function App() {
   }
   return (
     <div className='App'>
+      <Alert title='title' />
       <Tab mode='card' onSelect={(index) => console.log(index)}>
         <TabItem label='tab1'>测试 1 内容</TabItem>
         <TabItem label='tab2'>测试 2 内容</TabItem>
