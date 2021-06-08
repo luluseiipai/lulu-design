@@ -28,5 +28,5 @@ interface SelectProps {
   /**下拉框出现隐藏时触发 */
   onVisibleChange: (visible: boolean) => void
   /**选中时触发 */
-  onChange: () => void
+  onChange: (selectedValue: string, selectedValues: string[]) => void
 }
