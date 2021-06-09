@@ -1,0 +1,20 @@
+.lu-select {
+  position: relative;
+  .lu-input-wrapper {
+    cursor: pointer;
+    &:hover {
+      input {
+        border-color: $primary !important;
+      }
+    }
+  }
+  input {
+    &[readonly] {
+      background-color: #fff;
+      border-color: $input-border-color;
+      cursor: pointer;
+      // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+      opacity: 1;
+    }
+  }
+}
