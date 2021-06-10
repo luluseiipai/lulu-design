@@ -1,20 +1,20 @@
 import React, {
-  ChangeEvent,
   FC,
-  ReactElement,
   useEffect,
   useState,
-  KeyboardEvent,
   useRef,
   createContext,
   Children,
   FunctionComponentElement,
+  cloneElement,
+  MouseEvent,
 } from 'react'
 import classNames from 'classnames'
 import { Input } from '../Input/Input'
-import Icon from '../Icon'
+// import Icon from '../Icon'
 import Transition from '../Transition'
 import useClickOutside from '../../hooks/useClickOutside'
+import { OptionProps } from './Option'
 
 export interface SelectProps {
   /**指定默认选中的条目	 可以是是字符串或者字符串数组*/
@@ -68,6 +68,8 @@ export const Select: FC<SelectProps> = (props) => {
   const [value, setValue] = useState(
     typeof defaultValue === 'string' ? defaultValue : ''
   )
+  const containerRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const [selectedValues, setSelectedValues] = useState<string[]>(
     Array.isArray(defaultValue) ? defaultValue : []
   )
@@ -78,35 +80,83 @@ export const Select: FC<SelectProps> = (props) => {
     'menu-is-open': menuOpen,
   })
 
-  const handleClick = () => {
-    setMenuOpen(!menuOpen)
+  useClickOutside(containerRef, () => {
+    setMenuOpen(false)
+    if (onVisibleChange && menuOpen) {
+      onVisibleChange(false)
+    }
+  })
+
+  useEffect(() => {
+    // input focus
+    if (inputRef.current) {
+      inputRef.current.focus()
+      if (multiple && selectedValues.length > 0) {
+        inputRef.current.placeholder = ''
+      } else {
+        if (placeholder) {
+          inputRef.current.placeholder = placeholder
+        }
+      }
+    }
+  }, [multiple, placeholder, selectedValues])
+
+  const handleClick = (e: MouseEvent) => {
+    e.preventDefault()
+    if (!disabled) {
+      setMenuOpen(!menuOpen)
+      if (onVisibleChange) {
+        onVisibleChange(!menuOpen)
+      }
+    }
   }
 
   const handleSelect = (value: string, isSelected?: boolean) => {
     if (!multiple) {
       setMenuOpen(false)
+      setValue(value)
     } else {
       setValue('')
     }
+    let updatedValues = [value]
+    if (multiple) {
+      updatedValues = isSelected
+        ? selectedValues.filter((v) => v !== value)
+        : [...selectedValues, value]
+      setSelectedValues(updatedValues)
+    }
+    if (onChange) {
+      onChange(value, updatedValues)
+    }
   }
-
-  // const generateOptions = () => {
-  //   return Children.map(children, (child,index) => {
-  //     const childEl = child as FunctionComponentElement<>
-  //   })
-  // }
 
   const passedContext: ISelectContext = {
     selectedValues,
     multiple,
     onSelect: handleSelect,
   }
+
+  const generateOptions = () => {
+    return Children.map(children, (child, index) => {
+      const childEl = child as FunctionComponentElement<OptionProps>
+      const { displayName } = childEl.type
+      if (displayName === 'Option') {
+        return cloneElement(childEl, { index: `select-${index}` })
+      } else {
+        console.error(
+          'Warning: Select has a child which is not a Option Component'
+        )
+      }
+    })
+  }
+
   return (
-    <div className={containerClasses}>
+    <div ref={containerRef} className={containerClasses}>
       <div className='lu-select-input' onClick={handleClick}>
         <Input
           icon='angle-down'
           readOnly
+          ref={inputRef}
           value={value}
           placeholder={placeholder}
           name={name}
@@ -115,12 +165,7 @@ export const Select: FC<SelectProps> = (props) => {
       </div>
       <SelectContext.Provider value={passedContext}>
         <Transition in={menuOpen} animation='zoom-in-top' timeout={300}>
-          <ul>
-            <li>123</li>
-            <li>123</li>
-            <li>123</li>
-            <li>123</li>
-          </ul>
+          <ul className='lu-select-dropdown'>{generateOptions()}</ul>
         </Transition>
       </SelectContext.Provider>
     </div>
