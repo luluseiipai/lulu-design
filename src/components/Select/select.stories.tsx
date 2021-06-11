@@ -25,6 +25,8 @@ const Template: Story<SelectProps> = (args) => (
     <Select.Option value='567' />
     <Select.Option value='678' />
     <Select.Option value='789' />
+    <Select.Option value='890' />
+    <Select.Option value='012' />
   </Select>
 )
 
@@ -35,3 +37,21 @@ Default.args = {
 }
 Default.storyName = 'Select'
 Default.decorators = [Decorator]
+
+export const Multi = Template.bind({})
+Multi.args = {
+  multiple: true,
+  onVisibleChange: action('visible'),
+  onChange: action('changed'),
+}
+Multi.storyName = '支持多选的Select'
+Multi.decorators = [Decorator]
+
+export const disabled = Template.bind({})
+disabled.args = {
+  disabled: true,
+  onVisibleChange: action('visible'),
+  onChange: action('changed'),
+}
+disabled.storyName = '禁用的Select'
+disabled.decorators = [Decorator]

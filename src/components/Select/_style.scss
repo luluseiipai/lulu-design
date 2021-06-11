@@ -73,3 +73,32 @@
     }
   }
 }
+.lu-selected-tags {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  .lu-tag {
+    height: 80%;
+    padding: 2px 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba($primary, 0.2);
+    margin-left: 6px;
+    border-radius: 3px;
+    color: $primary;
+    background-color: rgba($primary, 0.1);
+    .lu-icon {
+      margin-left: 3px;
+      cursor: pointer;
+      &:hover {
+        color: darken($primary, 10%);
+      }
+    }
+  }
+}

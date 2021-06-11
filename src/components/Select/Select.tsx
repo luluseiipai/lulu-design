@@ -11,7 +11,7 @@ import React, {
 } from 'react'
 import classNames from 'classnames'
 import { Input } from '../Input/Input'
-// import Icon from '../Icon'
+import Icon from '../Icon'
 import Transition from '../Transition'
 import useClickOutside from '../../hooks/useClickOutside'
 import { OptionProps } from './Option'
@@ -70,6 +70,7 @@ export const Select: FC<SelectProps> = (props) => {
   )
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const containerWidth = useRef(0)
   const [selectedValues, setSelectedValues] = useState<string[]>(
     Array.isArray(defaultValue) ? defaultValue : []
   )
@@ -101,6 +102,12 @@ export const Select: FC<SelectProps> = (props) => {
     }
   }, [multiple, placeholder, selectedValues])
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerWidth.current = containerRef.current.getBoundingClientRect().width
+    }
+  })
+
   const handleClick = (e: MouseEvent) => {
     e.preventDefault()
     if (!disabled) {
@@ -123,8 +130,8 @@ export const Select: FC<SelectProps> = (props) => {
       updatedValues = isSelected
         ? selectedValues.filter((v) => v !== value)
         : [...selectedValues, value]
-      setSelectedValues(updatedValues)
     }
+    setSelectedValues(updatedValues)
     if (onChange) {
       onChange(value, updatedValues)
     }
@@ -168,6 +175,20 @@ export const Select: FC<SelectProps> = (props) => {
           <ul className='lu-select-dropdown'>{generateOptions()}</ul>
         </Transition>
       </SelectContext.Provider>
+      {multiple && selectedValues.length > 0 && (
+        <div
+          className='lu-selected-tags'
+          style={{ maxWidth: containerWidth.current - 32 }}>
+          {selectedValues.map((value, index) => {
+            return (
+              <span className='lu-tag' key={`tag-${value}-${index}`}>
+                {value}
+                <Icon icon='times' onClick={() => handleSelect(value, true)} />
+              </span>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
