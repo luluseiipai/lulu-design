@@ -25,10 +25,11 @@ const testMultiProps: SelectProps = {
 }
 
 const generateSelect = (props: SelectProps) => (
-  <Select {...testProps}>
+  <Select {...props}>
     <Option value='id1' />
-    <Option value='id2' label='text2' />
+    <Option value='id2' label='label2' />
     <Option value='id3' disabled label='disabled' />
+    <Option value='id4' label='label4' />
   </Select>
 )
 
@@ -56,5 +57,34 @@ describe('test Select Component', () => {
     expect(testProps.onChange).toHaveBeenCalledWith('id1', ['id1'])
     expect(input.value).toEqual('id1')
     // test focus
+    expect(document.activeElement).toEqual(input)
+  })
+  it('Select in multiple mode should work fine', () => {
+    const { getByText, getByPlaceholderText, container } = render(
+      generateSelect(testMultiProps)
+    )
+    const input = getByPlaceholderText('test') as HTMLInputElement
+    fireEvent.click(input)
+    const firstItem = getByText('id1')
+    const secItem = getByText('label2')
+    fireEvent.click(firstItem)
+    expect(firstItem).toBeInTheDocument()
+    expect(firstItem).toHaveClass('is-selected')
+    expect(container.getElementsByClassName('lu-tag')[0]).toBeInTheDocument()
+    expect(testMultiProps.onChange).toHaveBeenCalledWith('id1', ['id1'])
+    expect(input.placeholder).toEqual('')
+    fireEvent.click(secItem)
+    expect(secItem).toBeInTheDocument()
+    expect(secItem).toHaveClass('is-selected')
+    expect(testMultiProps.onChange).toHaveBeenCalledWith('id2', ['id1', 'id2'])
+    expect(container.querySelectorAll('.lu-tag').length).toEqual(2)
+    fireEvent.click(secItem)
+    expect(secItem).not.toHaveClass('is-selected')
+    expect(container.querySelectorAll('.lu-tag').length).toEqual(1)
+    expect(testMultiProps.onChange).toHaveBeenCalledWith('id2', ['id1'])
+    fireEvent.click(firstItem)
+    expect(container.querySelectorAll('.lu-tag').length).toEqual(0)
+    expect(testMultiProps.onChange).toHaveBeenCalledWith('id1', [])
+    expect(input.placeholder).toEqual('test')
   })
 })

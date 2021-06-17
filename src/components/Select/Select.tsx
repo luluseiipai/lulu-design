@@ -122,6 +122,9 @@ export const Select: FC<SelectProps> = (props) => {
     if (!multiple) {
       setMenuOpen(false)
       setValue(value)
+      if (onVisibleChange) {
+        onVisibleChange(false)
+      }
     } else {
       setValue('')
     }

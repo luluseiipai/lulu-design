@@ -8,6 +8,7 @@ import AutoComplete, {
   DataSourceType,
 } from './components/AutoComplete/AutoComplete'
 import Alert from './components/Alert'
+import Select from './components/Select'
 
 library.add(fas)
 const lakers = [
@@ -60,6 +61,19 @@ function App() {
         }}
         renderOption={renderOption}
       />
+      <Select
+        multiple
+        onChange={(data, list) => {
+          console.log('change')
+          console.log(data, list)
+        }}
+        onVisibleChange={(flag) => {
+          console.log(flag)
+        }}>
+        <Select.Option value='id1' />
+        <Select.Option value='id2' disabled />
+        <Select.Option value='id3' />
+      </Select>
     </div>
   )
 }
