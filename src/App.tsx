@@ -1,79 +1,27 @@
+import axios from 'axios'
 import React from 'react'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import Tab from './components/Tab/Tab'
-import TabItem from './components/Tab/TabItem'
-import Icon from './components/Icon'
-import AutoComplete, {
-  DataSourceType,
-} from './components/AutoComplete/AutoComplete'
-import Alert from './components/Alert'
-import Select from './components/Select'
 
-library.add(fas)
-const lakers = [
-  'bradley',
-  'pope',
-  'caruso',
-  'cook',
-  'cousins',
-  'james',
-  'AD',
-  'green',
-  'howard',
-  'kuzma',
-  'McGee',
-  'rando',
-]
 function App() {
-  const handleFetch = (query: string) => {
-    return lakers
-      .filter((name) => name.includes(query))
-      .map((name) => ({ value: name }))
-  }
-  const renderOption = (item: DataSourceType) => {
-    return <h2>Name: {item.value}</h2>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const upLoadedFile = files[0]
+      const formData = new FormData()
+      formData.append(upLoadedFile.name, upLoadedFile)
+      axios
+        .post('http://jsonplaceholder.typicode.com/posts', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => {
+          console.log(res)
+        })
+    }
   }
   return (
     <div className='App'>
-      <Alert title='title' />
-      <Tab mode='card' onSelect={(index) => console.log(index)}>
-        <TabItem label='tab1'>测试 1 内容</TabItem>
-        <TabItem label='tab2'>测试 2 内容</TabItem>
-        <TabItem label='disabled' disabled>
-          disabled
-        </TabItem>
-        <TabItem
-          label={
-            <div>
-              <Icon icon='check' />
-              123
-            </div>
-          }>
-          测试 4 内容
-        </TabItem>
-      </Tab>
-      <AutoComplete
-        placeholder='输入湖人队球员英文名试试'
-        fetchSuggestions={handleFetch}
-        onSelect={() => {
-          console.log('select')
-        }}
-        renderOption={renderOption}
-      />
-      <Select
-        multiple
-        onChange={(data, list) => {
-          console.log('change')
-          console.log(data, list)
-        }}
-        onVisibleChange={(flag) => {
-          console.log(flag)
-        }}>
-        <Select.Option value='id1' />
-        <Select.Option value='id2' disabled />
-        <Select.Option value='id3' />
-      </Select>
+      <input type='file' name='myFile' onChange={handleChange} />
     </div>
   )
 }
