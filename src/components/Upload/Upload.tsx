@@ -47,7 +47,7 @@ export const Upload: FC<UploadProps> = (props) => {
     updateFile: UploadFile,
     updateObj: Partial<UploadFile>
   ) => {
-    // prevlist
+    // 用于处理异步情况采用函数式
     setFileList((prevList) => {
       return prevList.map((file) => {
         if (file.uid === updateFile.uid) {
