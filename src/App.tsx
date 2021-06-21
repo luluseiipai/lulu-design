@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React from 'react'
+import Upload from './components/Upload/Upload'
 
 function App() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,9 +20,16 @@ function App() {
         })
     }
   }
+  const handleFileChange = (file: File) => {
+    console.log(file)
+  }
   return (
     <div className='App'>
       <input type='file' name='myFile' onChange={handleChange} />
+      <Upload
+        action='http://jsonplaceholder.typicode.com/posts'
+        onChange={handleFileChange}
+      />
     </div>
   )
 }
