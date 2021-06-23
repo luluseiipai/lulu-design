@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import classNames from 'classnames'
 import {
   FontAwesomeIcon,
@@ -32,7 +32,7 @@ export interface IconProps extends FontAwesomeIconProps {
  * import { Icon } from 'lulu-ui'
  * ~~~
  */
-export const Icon: React.FC<IconProps> = (props) => {
+export const Icon: FC<IconProps> = (props) => {
   const { className, theme, ...restProps } = props
   const classes = classNames('lu-icon', className, {
     [`icon-${theme}`]: theme,
