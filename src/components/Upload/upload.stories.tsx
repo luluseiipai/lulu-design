@@ -4,6 +4,7 @@ import { action } from '@storybook/addon-actions'
 
 import { Upload, UploadProps } from './Upload'
 import Button from '../Button'
+import Icon from '../Icon'
 
 export default {
   title: '组件/Upload',
@@ -70,3 +71,17 @@ Wrap.args = {
 }
 Wrap.storyName = '重新打包文件'
 Wrap.decorators = [Decorator]
+
+export const Drag = () => (
+  <Upload
+    action='http://jsonplaceholder.typicode.com/posts'
+    onChange={action('changed')}
+    multiple
+    drag>
+    <Icon icon='upload' size='5x' theme='secondary' />
+    <br />
+    <p>Drag file over to upload</p>
+  </Upload>
+)
+Drag.storyName = '拖拽上传文件'
+Drag.decorators = [Decorator]

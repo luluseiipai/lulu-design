@@ -5,14 +5,14 @@
 }
 
 .lu-upload-dragger {
-  background: $gray-100;
-  border: 1px dashed $gray-300;
-  border-radius: 4px;
-  cursor: pointer;
-  padding: 20px;
   width: 360px;
   height: 180px;
+  padding: 20px;
+  border-radius: 4px;
   text-align: center;
+  border: 1px dashed $gray-300;
+  background: $gray-100;
+  cursor: pointer;
   &:hover {
     border: 1px dashed $primary;
   }
