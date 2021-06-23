@@ -37,10 +37,10 @@ describe('test upload component', () => {
       '.lu-file-input'
     ) as HTMLInputElement
     uploadArea = wrapper.queryByText('click to upload') as HTMLElement
+    mockedAxios.post.mockResolvedValue({ data: 'cool' })
   })
   it('upload process should works fine', async () => {
     const { queryByText, container } = wrapper
-    mockedAxios.post.mockResolvedValue({ data: 'cool' })
     expect(uploadArea).toBeInTheDocument()
     expect(fileInput).not.toBeVisible()
     fireEvent.change(fileInput, { target: { files: [testFile] } })
