@@ -49,7 +49,7 @@ export const SelectContext = createContext<ISelectContext>({
  * ### 引用方法
  *
  * ~~~js
- * import { Select } from 'lulu-ui'
+ * import { Select } from 'lulu-design'
  * // 然后可以使用 <Select> 和 <Select.Option>
  * ~~~
  */

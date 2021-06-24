@@ -55,7 +55,7 @@ export interface UploadProps {
  * ### 引用方法
  *
  * ~~~js
- * import { Upload } from 'lulu-ui'
+ * import { Upload } from 'lulu-design'
  * ~~~
  */
 export const Upload: FC<UploadProps> = (props) => {

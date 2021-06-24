@@ -1,13 +1,13 @@
 {
-  "name": "lulu-ui",
+  "name": "lulu-design",
   "version": "0.1.0",
   "description": "React UI Component Library",
   "private": false,
-  "author": "Jim",
-  "homepage": "https://github.com/luluseiipai/lulu-ui",
+  "author": "luluseiipai",
+  "homepage": "https://github.com/luluseiipai/lulu-design",
   "repository": {
     "type": "git",
-    "url": "https://github.com/luluseiipai/lulu-ui"
+    "url": "https://github.com/luluseiipai/lulu-design"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -55,7 +55,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "prepublish": "npm run build:prod"
   },
   "eslintConfig": {
     "extends": [

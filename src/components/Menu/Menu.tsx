@@ -41,7 +41,7 @@ export const MenuContext = createContext<IMenuContext>({ index: '0' })
  * ## 引用方法
  *
  * ```ts
- * import { Menu } from 'lulu-ui'
+ * import { Menu } from 'lulu-design'
  * // 然后可以使用 Menu.Item 和 Menu.SubMenu 访问选项和子下拉菜单组件
  * ```
  */

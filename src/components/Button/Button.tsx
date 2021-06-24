@@ -32,7 +32,7 @@ export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>
  * ## 引用方法
  *
  * ```ts
- * import { Button } from 'lulu-ui'
+ * import { Button } from 'lulu-design'
  * ```
  */
 export const Button: FC<ButtonProps> = (props) => {

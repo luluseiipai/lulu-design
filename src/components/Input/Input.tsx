@@ -31,7 +31,7 @@ export interface InputProps
  *
  * ```ts
  * // 这样引用
- * import { Input } from 'lulu-ui'
+ * import { Input } from 'lulu-design'
  * ```
  *
  * 支持 HTMLInput 的所有基本属性

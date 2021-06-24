@@ -23,7 +23,7 @@ export interface AlertProps {
  * ### 引用方法
  *
  * ~~~ts
- * import { Alert } from 'lulu-ui'
+ * import { Alert } from 'lulu-design'
  * ~~~
  */
 export const Alert: FC<AlertProps> = (props) => {
