@@ -1,7 +1,26 @@
 {
   "name": "lulu-ui",
   "version": "0.1.0",
-  "private": true,
+  "description": "React UI Component Library",
+  "private": false,
+  "author": "Jim",
+  "homepage": "https://github.com/luluseiipai/lulu-ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luluseiipai/lulu-ui"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "Component",
+    "UI",
+    "React"
+  ],
+  "files": [
+    "dist"
+  ],
   "sideEffects": [
     "dist/index.css"
   ],
@@ -28,7 +47,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "clean": "rimraf ./dist",
     "build": "react-scripts build",
+    "build-ts": "tsc -p tsconfig.build.json",
+    "build-css": "node-sass ./src/styles/index.scss ./dist/index.css",
+    "build:prod": "npm run clean && npm run build-ts && npm run build-css",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
@@ -70,6 +93,7 @@
     "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.2.9",
     "@types/react-transition-group": "^4.4.1",
+    "rimraf": "^3.0.2",
     "storybook-dark-mode": "^1.0.8"
   }
 }
