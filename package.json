@@ -3,21 +3,21 @@
   "version": "0.1.4",
   "description": "React UI Component Library",
   "private": false,
-  "author": "luluseiipai",
-  "homepage": "https://github.com/luluseiipai/lulu-design",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/luluseiipai/lulu-design"
-  },
+  "author": "NikQ",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
+  "homepage": "https://github.com/luluseiipai/lulu-design",
   "keywords": [
     "Component",
     "UI",
     "React"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luluseiipai/lulu-design"
+  },
   "files": [
     "dist"
   ],
